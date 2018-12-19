@@ -1,6 +1,6 @@
 # GIT
 
-commands:
+commands shortcuts:
 
 // Shows all the files that are currently changed and not yet committed.
 git status
@@ -8,4 +8,40 @@ git status
 // Shows all the changes that you made to these files
 git diff
 
-// 
+// Adds everything to staging (staging is from where you can commit)
+git add .
+
+// Adds only the file you want to commit your changes in
+git add my_file.py
+
+// Creates a commit with the message you describe your changes (you have to "add" the files first)
+git commit -m "I fixed everything, cuz I\'m that good"
+
+// Shows the list of commits
+git log
+
+// Shows the list of commits with the changes shown
+git log -p
+
+// Pulls (downloads) all the changes from our online reprository
+git pull
+
+// Pushes (uploads) all the commits that you made locally
+git push
+
+
+
+VS Code
+
+// Type to search for file name
+cmd + P
+
+// Type to search for word in current file
+cmd + F
+
+// Type to search for word in any file
+cmd + shift + F
+
+// Select a word (or a part of a word) and press to select more
+cmd + D
+
