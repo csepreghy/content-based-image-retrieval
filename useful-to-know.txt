@@ -1,0 +1,11 @@
+# GIT
+
+commands:
+
+// Shows all the files that are currently changed and not yet committed.
+git status
+
+// Shows all the changes that you made to these files
+git diff
+
+// 
