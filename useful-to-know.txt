@@ -1,6 +1,6 @@
 # GIT
 
-commands shortcuts:
+commands and shortcuts:
 
 // Shows all the files that are currently changed and not yet committed.
 git status
