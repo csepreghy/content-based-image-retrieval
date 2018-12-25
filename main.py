@@ -18,6 +18,7 @@ IMG = cv2.drawKeypoints(IMG, KEYPOINTS, None)
 cv2.imshow("Image", IMG)
 cv2.waitKey(0)
 
+cv2.destroyAllWindows()
 
 print(IMG)
 
