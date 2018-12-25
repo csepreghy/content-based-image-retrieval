@@ -15,9 +15,12 @@ sift = cv2.xfeatures2d.SIFT_create()
 
 img = cv2.drawKeypoints(img, keypoints, None)
 
-cv2.imshow("Image", img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# cv2.imshow("Image", img)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+plt.imshow(img)
+plt.show()
 
 print(img)
 
