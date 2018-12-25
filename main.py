@@ -7,7 +7,7 @@ style.use('fivethirtyeight')
 # If you get an error regarding cv2.xfeatures2d it's because in the new version that algorithm isn't free
 # Do pip install opencv-contrib-python==3.4.1.15 to get rid of the error
 
-IMG = cv2.imread("object_categories/brain/image_0004.jpg",
+IMG = cv2.imread("object_categories/brain/image_0003.jpg",
                  cv2.IMREAD_GRAYSCALE)
 
 SIFT = cv2.xfeatures2d.SIFT_create()
