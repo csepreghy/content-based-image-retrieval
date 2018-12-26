@@ -13,19 +13,19 @@ def get_descriptor_matrix(NUM_OF_IMAGES, img_category):
   for i in range(NUM_OF_IMAGES):
     print(i)
     if i < 10:
-      img = cv2.imread("object_categories/brain/image_000" +
+      img = cv2.imread("object_categories/" + img_category + "/image_000" +
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
 
     elif i >= 10 & i < 100:
-      img = cv2.imread("object_categories/brain/image_00" +
+      img = cv2.imread("object_categories/" + img_category + "/image_00" +
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
 
     elif i >= 100 & i < 1000:
-      img = cv2.imread("object_categories/brain/image_0" +
+      img = cv2.imread("object_categories/" + img_category + "/image_0" +
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
 
     elif i >= 100 & i < 10000:
-      img = cv2.imread("object_categories/brain/image_" +
+      img = cv2.imread("object_categories/" + img_category + "/image_" +
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
 
     keypoints, descriptors = sift.detectAndCompute(img, None)
