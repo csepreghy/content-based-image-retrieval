@@ -1,0 +1,1 @@
+NUM_OF_IMAGES = 5
