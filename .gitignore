@@ -1,2 +1,3 @@
 .DS_Store
 object_categories/.DS_Store
+src/__pycache__/
