@@ -1,9 +1,4 @@
-import cv2
-import cv2
-import matplotlib.pyplot as plt
-from matplotlib import style
-
-style.use('fivethirtyeight')
+from import_modules import *
 
 def get_descriptor_matrix(N_IMAGES, img_category):
   sift = cv2.xfeatures2d.SIFT_create()
