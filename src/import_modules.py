@@ -1,5 +1,5 @@
 # Our own files
-from constants import NUM_OF_IMAGES
+from constants import N_IMAGES
 from sift_functions import get_descriptor_matrix
 
 # Python modules
