@@ -2,7 +2,7 @@ from import_modules import *
 
 style.use('fivethirtyeight') # for matplotlib
 
-descriptor_matrix = get_descriptor_matrix(NUM_OF_IMAGES, "brain")
+descriptor_matrix = get_descriptor_matrix(NUM_OF_IMAGES, img_category = "buddha")
 # didn't make brain into a constant because we might have a list instead to loop througj
 
 print(descriptor_matrix)

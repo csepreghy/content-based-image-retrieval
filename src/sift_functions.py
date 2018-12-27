@@ -33,8 +33,8 @@ def get_descriptor_matrix(NUM_OF_IMAGES, img_category):
 
     descriptor_matrix.append(descriptors)
 
-    # plt.imshow(img)
-    # plt.show()
+    plt.imshow(img)
+    plt.show()
     # cv2.imshow("Image", img)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
