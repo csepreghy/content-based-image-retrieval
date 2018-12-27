@@ -2,6 +2,8 @@ from import_modules import *
 
 style.use('fivethirtyeight') # for matplotlib
 
+all_categories = get_all_categories()
+
 descriptor_matrix = get_descriptor_matrix(N_IMAGES, img_category = "buddha")
 # didn't make the img_category into a constant because we might have a list instead to loop througj
 
