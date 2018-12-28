@@ -6,7 +6,6 @@ def get_descriptor_matrix(N_IMAGES, img_category):
 
   print(N_IMAGES)
   for i in range(N_IMAGES):
-    print(i)
     if i < 9:
       img = cv2.imread("object_categories/" + img_category + "/image_000" +
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
@@ -20,10 +19,11 @@ def get_descriptor_matrix(N_IMAGES, img_category):
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
 
     try:
-      keypoints, descriptors = sift.detectAndCompute(img, None)
+      (keypoints, descriptors) = sift.detectAndCompute(img, None)
       img = cv2.drawKeypoints(img, keypoints, None)
-      descriptor_matrix.append(descriptors)
-    
+      
+      descriptor_matrix += [descriptor for descriptor in descriptors]
+
     except:
       break
 
