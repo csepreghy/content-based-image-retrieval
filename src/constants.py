@@ -1,1 +1,1 @@
-N_IMAGES = 200
+N_IMAGES = 15
