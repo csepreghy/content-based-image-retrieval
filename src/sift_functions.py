@@ -6,6 +6,7 @@ def get_descriptor_matrix(N_IMAGES, img_category):
 
   print(N_IMAGES)
   for i in range(N_IMAGES):
+    print(img_category, i)
     if i < 9:
       img = cv2.imread("object_categories/" + img_category + "/image_000" +
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
@@ -34,3 +35,16 @@ def get_descriptor_matrix(N_IMAGES, img_category):
     # cv2.destroyAllWindows()
 
   return descriptor_matrix
+
+
+def get_descriptor_matrix_all_categories(all_categories):
+  descriptor_matrix_all_categories = []
+
+  for category in all_categories:
+    descriptor_matrix = get_descriptor_matrix(N_IMAGES = 1000, img_category=category)
+    descriptor_matrix_all_categories.append({
+      "category": category,
+      "descriptor_matrix": descriptor_matrix
+    })
+
+  return descriptor_matrix_all_categories
