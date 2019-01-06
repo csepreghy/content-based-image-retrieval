@@ -9,25 +9,24 @@ all_categories = get_all_categories()
 
 # Write a variable into the pickle file:
 
-# with open('descriptor_matrix_10_10.pickle', 'wb') as handle:
+# with open('pickles/descriptor_matrix_10_10.pickle', 'wb') as handle:
 #     pickle.dump(descriptor_matrix_10_10,
 #                 handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 # Read from the pickle file and assign it to a variable
 
-with open('descriptor_matrix_10_10.pickle', 'rb') as handle:
+with open('pickles/descriptor_matrix_10_10.pickle', 'rb') as handle:
     descriptor_matrix_10_10 = pickle.load(handle)
     print(len(descriptor_matrix_10_10))
-
-# km = KMeans(init='k-means++', n_clusters=200, random_state=0, n_init=10).fit(np.array(descriptor_matrix_10_10))
 
 kmeans = KMeans(n_clusters=200)
 kmeans_model = kmeans.fit(np.array(descriptor_matrix_10_10))
 
-pickle.dump(kmeans_model, open('codebook.pickle', 'wb'))  # saves the k-means model
+# saves the k-means model
+pickle.dump(kmeans_model, open('pickles/codebook.pickle', 'wb'))
 
 loaded_kmeans_model = pickle.load(
-    open('codebook.pickle', 'rb'))  # loads the k-means model
+    open('pickles/codebook.pickle', 'rb'))  # loads the k-means model
 
 # print("kmeans labels")
 print(loaded_kmeans_model.labels_)
