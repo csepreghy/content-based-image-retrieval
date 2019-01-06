@@ -22,15 +22,20 @@ with open('descriptor_matrix_10_10.pickle', 'rb') as handle:
 # km = KMeans(init='k-means++', n_clusters=200, random_state=0, n_init=10).fit(np.array(descriptor_matrix_10_10))
 
 kmeans = KMeans(n_clusters=200)
-kmeans.fit(np.array(descriptor_matrix_10_10))
+kmeans_model = kmeans.fit(np.array(descriptor_matrix_10_10))
+
+pickle.dump(kmeans_model, open('codebook.pickle', 'wb'))  # saves the k-means model
+
+loaded_kmeans_model = pickle.load(
+    open('codebook.pickle', 'rb'))  # loads the k-means model
 
 # print("kmeans labels")
-print(kmeans.labels_)
+print(loaded_kmeans_model.labels_)
 
 # kmeans.predict()
 
 # print("cluster centers")
-print(kmeans.cluster_centers_)
+print(loaded_kmeans_model.cluster_centers_)
 
 # If you get an error regarding cv2.xfeatures2d it's because in the new version that algorithm isn't free
 # Do pip install opencv-contrib-python==3.4.1.15 to get rid of the error
