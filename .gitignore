@@ -2,3 +2,4 @@
 object_categories/.DS_Store
 src/__pycache__/
 descriptor_matrix_all_categories.pickle
+pickles
