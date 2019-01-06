@@ -49,6 +49,7 @@ def create_distance_matrix(codebook, features):
     #distance_matrix = np.array((len(features), k))
     distance_matrix = []
     index_descriptors = 0
+    count = 0
     for descriptor in features:
         row = []
         index_codebook = 0
@@ -56,23 +57,22 @@ def create_distance_matrix(codebook, features):
             #distance_matrix[index_descriptors][index_codebook].append(measure_eucledian_distance(codeword, descriptor))
             row.append(measure_eucledian_distance(codeword, descriptor))
             index_codebook += 1
+            #print("iterations: ", index_descriptors, index_codebook)
         index_descriptors += 1
         distance_matrix.append(row)
-        print("%", int(int(index_descriptors/len(features)*100)*0.3)*"=", int(100-int(index_descriptors/len(features)*20))*".", "%")
-        print()
+        #print("%", int(int(index_descriptors/len(features)*100)*0.3)*"=", int(100-int(index_descriptors/len(features)*20))*".", "%")
     return distance_matrix
 
 def create_bag_of_words(distance_matrix):
     k = len(codebook)
-    #sparse_vector = np.zeros(k)
-    sparse_vector = []
+    sparse_vector = np.zeros(k)
     for i in distance_matrix:
         minimum = min(i)
         for j in i:
-            count = 0
             if j == minimum: # and if minimum > "threshold"
-                count += 1
-        sparse_vector.append(count)
+                print(i,j)
+                sparse_vector[j] += 1
+                
     print(sparse_vector)
         
 
