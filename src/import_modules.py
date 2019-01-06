@@ -9,5 +9,5 @@ import pickle
 
 # Our own files
 from constants import N_IMAGES
-from sift_functions import get_descriptor_matrix, get_descriptor_matrix_10_10
+from sift_functions import get_descriptor_matrix, get_descriptor_matrix_10_10, get_sift_descriptors_for_img
 from helper_functions import get_all_categories
