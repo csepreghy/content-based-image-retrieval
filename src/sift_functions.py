@@ -46,3 +46,9 @@ def get_descriptor_matrix_10_10(all_categories):
         descriptor for descriptor in descriptor_matrix]
 
   return descriptor_matrix_10_10
+
+
+def get_sift_descriptors_for_img(img):
+  sift = cv2.xfeatures2d.SIFT_create()
+  (keypoints, descriptors) = sift.detectAndCompute(img, None)
+  return descriptors
