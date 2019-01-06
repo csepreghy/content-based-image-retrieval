@@ -80,11 +80,14 @@ def create_bag_of_words(distance_matrix):
         minimum = min(i)
         for j in i:
             if j == minimum: # and if minimum > "threshold"
-                print(i,j)
-                sparse_vector[j] += 1
+                #print(i,j)
+                print(sparse_vector)
+                sparse_vector[int(j)] += 1
                 
     print(sparse_vector)
-        
 
-test_bag_of_words = create_bag_of_words(create_distance_matrix(codebook, codebook)) 
+image_test = cv2.imread("../ object_categories/pizza/image_0013.jpg")     
+
+
+test_bag_of_words = create_bag_of_words(create_distance_matrix(codebook, image_test)) 
 print(test_bag_of_words)       
