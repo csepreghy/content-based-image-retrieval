@@ -4,6 +4,10 @@ style.use('fivethirtyeight') # for matplotlib
 
 all_categories = get_all_categories()
 
+df = get_results_dataframe(all_categories, n_categories=5)
+print(df.head())
+print(df.tail())
+
 descriptor_matrix_10_10 = get_descriptor_matrices(all_categories, 10 , 10)
 #descriptor_matrix_all = get_descriptor_matrix(all_categories, len(all_categories), # needs new fuction for finding nr. of images)
 
