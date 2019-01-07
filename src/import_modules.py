@@ -9,6 +9,6 @@ import pickle
 import pandas as pd 
 
 # Our own files
-from constants import N_IMAGES
-from image_processing_functions import get_descriptor_matrix, get_descriptor_matrices, get_sift_descriptors_for_img
+from constants import N_IMAGES, k
+from image_processing_functions import *
 from helper_functions import get_all_categories
