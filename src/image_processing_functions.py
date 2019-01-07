@@ -53,3 +53,8 @@ def get_sift_descriptors_for_img(img):
   sift = cv2.xfeatures2d.SIFT_create()
   (keypoints, descriptors) = sift.detectAndCompute(img, None)
   return descriptors
+
+def get_results_dataframe():
+  print("hello")
+
+get_results_dataframe()
