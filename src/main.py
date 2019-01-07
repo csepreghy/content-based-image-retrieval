@@ -4,8 +4,10 @@ style.use('fivethirtyeight') # for matplotlib
 
 all_categories = get_all_categories()
 
+get_results_dataframe(all_categories, n_categories=5)
+
 descriptor_matrix_10 = get_descriptor_matrices(all_categories, 10, 10)
-print(len(descriptor_matrix_10))
+
 
 # Write a variable into the pickle file:
 
