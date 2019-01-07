@@ -9,6 +9,6 @@ import pickle
 import pandas as pd
 
 # Our own files
-from constants import N_IMAGES
+from constants import N_IMAGES, k
 from image_processing_functions import *
 from helper_functions import get_all_categories

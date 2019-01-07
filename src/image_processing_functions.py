@@ -4,9 +4,9 @@ def get_descriptor_matrix(N_IMAGES, img_category):
   sift = cv2.xfeatures2d.SIFT_create()
   descriptor_matrix = []
 
-  print(N_IMAGES)
+  #print(N_IMAGES)
   for i in range(N_IMAGES):
-    print(img_category, i)
+    #print(img_category, i)
     if i < 9:
       img = cv2.imread("object_categories/" + img_category + "/image_000" +
                        str(i + 1) + ".jpg", cv2.IMREAD_GRAYSCALE)
@@ -48,6 +48,11 @@ def get_descriptor_matrices(all_categories, n_images, n_categories):
 
   return descriptor_matrix
 
+def measure_eucledian_distance(vector1, vector2):
+    sum = 0
+    for i in range(128):
+        sum += (vector1[i] - vector2[i])**2
+    return np.sqrt(sum)
 
 def get_sift_descriptors_for_img(img):
   sift = cv2.xfeatures2d.SIFT_create()
@@ -86,3 +91,36 @@ def get_results_dataframe(all_categories, n_categories):
   
   return df
 
+def create_distance_matrix(codebook, features):
+    k = k
+    distance_matrix = []
+    index_descriptors = 0
+    for descriptor in features:
+        row = []
+        index_codebook = 0
+        for codeword in codebook:
+            row.append(measure_eucledian_distance(codeword, descriptor))
+            index_codebook += 1
+        index_descriptors += 1
+        distance_matrix.append(row)
+        print(int(index_descriptors/len(features)*100), "%")
+    return distance_matrix
+
+# Function that creates K lenght sparse vector that represents the a given images "bag of words"
+def create_bag_of_words(distance_matrix):
+    k = k
+    sparse_vector = np.zeros(k)
+    for i in range(len(sparse_vector)):
+        minimum =  min (distance_matrix[i])
+        for j in range(len(distance_matrix[i])):
+            if distance_matrix[i][j] == minimum:
+                sparse_vector[j] += 1
+    return sparse_vector
+    
+# Function to calculate each cell of the "bag of words" column
+def create_bags_of_words(df):
+    df = df['type'] == "train"
+    for row in df:
+        img_descriptors = get_sift_descriptors_for_img(row["img_array"])
+        distance_matrix = create_distance_matrix(codebook, img_descriptors)
+        row["bag_of_words"] = create_bag_of_words(distance_matrix)
