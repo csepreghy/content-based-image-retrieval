@@ -37,15 +37,16 @@ def get_descriptor_matrix(N_IMAGES, img_category):
   return descriptor_matrix
 
 
-def get_descriptor_matrix_10_10(all_categories):
-  descriptor_matrix_10_10 = []
+def get_descriptor_matrices(all_categories, n_images, n_categories):
+  descriptor_matrix = []
 
-  for category in all_categories[0:9]:
-    descriptor_matrix = get_descriptor_matrix(N_IMAGES = 10, img_category=category)
-    descriptor_matrix_10_10 += [
+  for category in all_categories[0:n_categories]:
+    descriptor_matrix = get_descriptor_matrix(
+        N_IMAGES=n_images, img_category=category)
+    descriptor_matrix += [
         descriptor for descriptor in descriptor_matrix]
 
-  return descriptor_matrix_10_10
+  return descriptor_matrix
 
 
 def get_sift_descriptors_for_img(img):

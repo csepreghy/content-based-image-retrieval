@@ -2,10 +2,10 @@ from import_modules import *
 
 style.use('fivethirtyeight') # for matplotlib
 
-# all_categories = get_all_categories()
+all_categories = get_all_categories()
 
-
-# descriptor_matrix_10_10 = get_descriptor_matrix_10_10(all_categories)
+descriptor_matrix_10 = get_descriptor_matrices(all_categories, 10, 10)
+print(len(descriptor_matrix_10))
 
 # Write a variable into the pickle file:
 
@@ -15,7 +15,7 @@ style.use('fivethirtyeight') # for matplotlib
 
 # Read from the pickle file and assign it to a variable
 
-with open('../pickles/descriptor_matrix_10_10.pickle', 'rb') as handle:
+with open('./pickles/descriptor_matrix_10_10.pickle', 'rb') as handle:
     descriptor_matrix_10_10 = pickle.load(handle)
     print(len(descriptor_matrix_10_10))
 
@@ -25,9 +25,9 @@ with open('../pickles/descriptor_matrix_10_10.pickle', 'rb') as handle:
 #saves the k-means model
 # pickle.dump(kmeans_model, open('../pickles/codebook.pickle', 'wb')) # saves the k-means model
 
-kmeans_model = pickle.load(open('../pickles/codebook.pickle', 'rb'))  # loads the k-means model
+kmeans_model = pickle.load(open('./pickles/codebook.pickle', 'rb'))  # loads the k-means model
 
-img = cv2.imread("../object_categories/sunflower/image_0015.jpg", cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("./object_categories/sunflower/image_0015.jpg", cv2.IMREAD_GRAYSCALE)
 img_descriptors = get_sift_descriptors_for_img(img)
 # print("len of img_descriptors")
 # print(len(img_descriptors))
@@ -86,7 +86,7 @@ def create_bag_of_words(distance_matrix):
 #     pickle.dump(temp_distance_matrix,
 #                 handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-with open('../pickles/temp_distance_matrix.pickle', 'rb') as handle:
+with open('./pickles/temp_distance_matrix.pickle', 'rb') as handle:
     temp_distance_matrix = pickle.load(handle)
 
 test_bag_of_words = create_bag_of_words(temp_distance_matrix) 
