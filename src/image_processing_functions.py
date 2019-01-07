@@ -93,33 +93,33 @@ def get_results_dataframe(all_categories, n_categories):
   return df
 
 def create_distance_matrix(codebook, features):
-    distance_matrix = np.array((len(features), len(codebook)))
-    for i, descriptor in enumerate(features):
-        for j, codeword in enumerate(codebook):
-          distance_matrix[i,j] = measure_eucledian_distance(codeword, descriptor)
-          print("distance done")
-        #print("create distance matrix", int(index_descriptors/len(features)*100), "%")
-    return distance_matrix  
+  distance_matrix = np.array((len(features), len(codebook)))
+  for i, descriptor in enumerate(features):
+    for j, codeword in enumerate(codebook):
+      distance_matrix[i,j] = measure_eucledian_distance(codeword, descriptor)
+      print("measure_eucledian_distance done")
+      #print("create distance matrix", int(index_descriptors/len(features)*100), "%")
+  return distance_matrix
 
 # Function that creates K lenght sparse vector that represents the a given images "bag of words"
 def create_bag_of_words(distance_matrix):
-    sparse_vector = np.zeros(k)
-    for i in range(len(sparse_vector)):
-        minimum =  min (distance_matrix[i])
-        for j in range(len(distance_matrix[i])):
-            if distance_matrix[i][j] == minimum:
-                sparse_vector[j] += 1
-    return sparse_vector
+  sparse_vector = np.zeros(k)
+  for i in range(len(sparse_vector)):
+    minimum =  min (distance_matrix[i])
+    for j in range(len(distance_matrix[i])):
+      if distance_matrix[i][j] == minimum:
+          sparse_vector[j] += 1
+  return sparse_vector
     
 # Function to calculate each cell of the "bag of words" column
 def create_bags_of_words(df, codebook):
-    df[df['type'] == 'train']
-    #print(df.head())
-    for index, row in df.iterrows():
-      print("image array: ", df["img_array"].iloc[index])
-      img_descriptors = get_sift_descriptors_for_img(df["img_array"].iloc[index])
-      distance_matrix = create_distance_matrix(codebook, img_descriptors)
-      print("create_bags_of_words, nr. of distance matrices calculated: ", index)
-      df["bag_of_words"].iloc[index] = create_bag_of_words(distance_matrix)
-      print(df["bag_of_words"].iloc[index])
-    print(df.head())
+  df[df['type'] == 'train']
+  #print(df.head())
+  for index, row in df.iterrows():
+    print("image array: ", df["img_array"].iloc[index])
+    img_descriptors = get_sift_descriptors_for_img(df["img_array"].iloc[index])
+    distance_matrix = create_distance_matrix(codebook, img_descriptors)
+    print("create_bags_of_words, nr. of distance matrices calculated: ", index)
+    df["bag_of_words"].iloc[index] = create_bag_of_words(distance_matrix)
+    print(df["bag_of_words"].iloc[index])
+  print(df.head())
