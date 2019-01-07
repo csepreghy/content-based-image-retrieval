@@ -113,13 +113,14 @@ def create_bag_of_words(distance_matrix):
     
 # Function to calculate each cell of the "bag of words" column
 def create_bags_of_words(df, codebook):
+  print("create_bags_of_words")
   df[df['type'] == 'train']
   #print(df.head())
   for index, row in df.iterrows():
     print("image array: ", df["img_array"].iloc[index])
     img_descriptors = get_sift_descriptors_for_img(df["img_array"].iloc[index])
     distance_matrix = create_distance_matrix(codebook, img_descriptors)
-    print("create_bags_of_words, nr. of distance matrices calculated: ", index)
+    print("nr. of distance matrices calculated: ", index)
     df["bag_of_words"].iloc[index] = create_bag_of_words(distance_matrix)
     print(df["bag_of_words"].iloc[index])
   print(df.head())
