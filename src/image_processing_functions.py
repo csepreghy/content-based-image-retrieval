@@ -13,15 +13,12 @@ def get_results_dataframe(all_categories, n_categories):
     for i, img_name in enumerate(img_names[1:len(img_names)]):
       if img_name != ".DS_Store":
         img = cv2.imread("object_categories/" + category + "/" + img_name, cv2.IMREAD_GRAYSCALE)
-        #(keypoints, descriptors) = sift.detectAndCompute(img, None)
-        #img_features = descriptors
 
       if i < len(img_names)/2:
         df = df.append({
           'file_name': img_name,
           'category': category,
           'img_array': img,
-          #' img_features': img_features,
           'type': 'train',
           'bag_of_words': None
         }, ignore_index=True)
@@ -31,11 +28,10 @@ def get_results_dataframe(all_categories, n_categories):
           'file_name': img_name,
           'category': category,
           'img_array': img,
-          # 'img_features': img_features,
           'type': 'test',
           'bag_of_words': None
         }, ignore_index=True)
-    print("category loaded nr. ", category_i, "of ", len(all_categories))
+    print("category loaded nr. ", category_i, "of ", n_categories)
   
   return df
 
@@ -85,4 +81,5 @@ def create_bags_of_words(df, codebook):
     distance_matrix = calculate_distance_matrix(img_descriptors, codebook)
     df["bag_of_words"].iloc[index] = create_bag_of_words(distance_matrix)
     print("Full iterations done: ", index)
+
   return df
