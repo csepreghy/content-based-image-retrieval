@@ -90,17 +90,6 @@ def get_results_dataframe(all_categories, n_categories):
   
   return df
 
-get_results_dataframe()
-
-def create_distance_matrix(codebook, features):
-  distance_matrix = np.array((len(features), len(codebook)))
-  for i, descriptor in enumerate(features):
-    for j, codeword in enumerate(codebook):
-      distance_matrix[i,j] = measure_eucledian_distance(codeword, descriptor)
-      print("measure_eucledian_distance done")
-      #print("create distance matrix", int(index_descriptors/len(features)*100), "%")
-  return distance_matrix
-
 # Function that creates K lenght sparse vector that represents the a given images "bag of words"
 def create_bag_of_words(distance_matrix):
   sparse_vector = np.zeros(k)
