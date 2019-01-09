@@ -39,8 +39,9 @@ def get_results_dataframe(all_categories, n_categories, max_n_images):
 # Collects all sift features for training images in one np.array to use for clustering
 def calculate_sift_features_for_codebook(df):
   sift = cv2.xfeatures2d.SIFT_create()
+  df_only_train = df.loc[df['type'] == 'train']
   sift_features = []
-  for i, row in df.loc[df['type'] == 'train'].iterrows():
+  for i, row in df_only_train.iterrows():
     img = df.at[i, 'img_array']
     (keypoints, descriptors) = sift.detectAndCompute(img, None)
     if descriptors is not None:
@@ -84,3 +85,19 @@ def create_bags_of_words(df, codebook):
     print("Full iterations done: ", index)
 
   return df
+
+def calculate_indian_distance(hist_1, hist_2):
+  sum_ = 0
+  for i in range(k):
+    sum_ += np.sqrt(hist_1[i] * hist_2[i])
+  return 1-(1/np.sqrt(np.mean(hist_1) * np.mean(hist_2) * (k**2))) * sum_
+
+
+def calculate_hist_dist(test_BoW, df):
+  hist_dist = []
+  for i, row in df.iterrows():
+    hist_2 = df["bag_of_words"].iloc[i]
+    category = (df["category"].iloc[i])
+    hist_dist.append((calculate_indian_distance(test_BoW, hist_2), category))
+  # Mikkel you picese of shit, finish this function
+  return 
