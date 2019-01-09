@@ -6,6 +6,7 @@ from os import listdir
 from sklearn.cluster import KMeans
 import numpy as np
 import pickle
+import pandas as pd 
 
 # Our own files
 from constants import N_IMAGES
