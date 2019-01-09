@@ -7,6 +7,7 @@ from sklearn.cluster import KMeans
 import numpy as np
 import pickle
 import pandas as pd
+from scipy.spatial import distance
 
 # Our own files
 from constants import N_IMAGES, k
