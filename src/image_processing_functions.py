@@ -1,5 +1,6 @@
 from import_modules import *
 
+# Creates the data frame and fills all columns except for "bag_of_words"
 def get_results_dataframe(all_categories, n_categories):
   df = pd.DataFrame(columns=['file_name', 'category', 'img_array', 'type', 'bag_of_words'])
   #sift = cv2.xfeatures2d.SIFT_create()
@@ -38,6 +39,7 @@ def get_results_dataframe(all_categories, n_categories):
   
   return df
 
+# Collects all sift features for training images in one np.array to use for clustering
 def calculate_sift_features_for_codebook(df):
   sift = cv2.xfeatures2d.SIFT_create()
   sift_features = []
@@ -54,7 +56,15 @@ def calculate_sift_features_for_codebook(df):
   print("features added for nr. of img: ", i, "of: ", len(df))
   return sift_features
 
-# Function that creates K lenght sparse vector that represents the a given images "bag of words"
+# Creates distance matrix between image features and codewords in codebook
+def calculate_distance_matrix (img_features, codebook):
+  distance_matrix = np.zeros((len(img_features), len(codebook)))
+  for i, row in enumerate(distance_matrix):
+    for j, col in enumerate(row):
+      distance_matrix[i,j] = distance.euclidean(img_features[i], codebook[j])
+  return distance_matrix
+
+# Function that creates K length sparse vector that represents the a given images "bag of words"
 def create_bag_of_words(distance_matrix):
   sparse_vector = np.zeros(k)
   for i, descriptor in enumerate(distance_matrix):
@@ -64,17 +74,6 @@ def create_bag_of_words(distance_matrix):
         sparse_vector[j] +=1
   #print("create bag of words: BoW done", )
   return sparse_vector
-      
-
-def calculate_distance_matrix (img_features, codebook):
-  distance_matrix = np.zeros((len(img_features), len(codebook)))
-  for i, row in enumerate(distance_matrix):
-    for j, col in enumerate(row):
-      distance_matrix[i,j] = distance.euclidean(img_features[i], codebook[j])
-  return distance_matrix
-
- 
-
 
 # Function to calculate each cell of the "bag of words" column
 def create_bags_of_words(df, codebook):
