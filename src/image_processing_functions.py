@@ -36,7 +36,6 @@ def get_descriptor_matrix(N_IMAGES, img_category):
 
   return descriptor_matrix
 
-
 def get_descriptor_matrices(all_categories, n_images, n_categories):
   descriptor_matrix = []
   for category in all_categories[0:n_categories]:
@@ -47,44 +46,33 @@ def get_descriptor_matrices(all_categories, n_images, n_categories):
 
   return descriptor_matrix
 
-# def calculate_sift_features_for_codebook(df):
-#   sift = cv2.xfeatures2d.SIFT_create()
-#   sift_features = []
-#   df_only_train = df[df["type"] == "train"]
-#   for i, row in df.iterrows():
-#     img = df_only_train[df_only_train["img_array"]].iloc[i]
-#     (keypoints, descriptors) = sift.detectAndCompute(img, None)
-#     sift_features.append(descriptors)
-#   return sift_features
-
 def measure_eucledian_distance(vector1, vector2):
   sum = 0
   for i in range(128):
     sum += (vector1[i] - vector2[i])**2
   return np.sqrt(sum)
 
-def get_sift_descriptors_for_img(img):
-  sift = cv2.xfeatures2d.SIFT_create()
-  (keypoints, descriptors) = sift.detectAndCompute(img, None)
-  return descriptors
-
-
 def get_results_dataframe(all_categories, n_categories):
-  df = pd.DataFrame(columns=['file_name', 'category', 'img_array', 'type', 'bag_of_words'])
+  df = pd.DataFrame(columns=['file_name', 'category', 'img_array', 'img_features', 'type', 'bag_of_words'])
+  sift = cv2.xfeatures2d.SIFT_create()
+  #print(all_categories)
 
   for category_i, category in enumerate(all_categories[0:n_categories]):
-    #print("DataFrame creation: category " + str(category_i + 1) + "/" + str(n_categories))
     img_names = [img for img in listdir("./object_categories/" + category)]
-    if ".DS_Store" in img_names: img_names.remove(".DS_Store")
+    #if ".DS_Store" in img_names: img_names.remove(".DS_Store")
   
-    for i, img_name in enumerate(img_names):
-      img = cv2.imread("object_categories/" + category + "/" + img_name, cv2.IMREAD_GRAYSCALE)
-      
+    for i, img_name in enumerate(img_names[1:len(img_names)]):
+      if img_name != ".DS_Store":
+        img = cv2.imread("object_categories/" + category + "/" + img_name, cv2.IMREAD_GRAYSCALE)
+        (keypoints, descriptors) = sift.detectAndCompute(img, None)
+        img_features = descriptors
+
       if i < len(img_names)/2:
         df = df.append({
           'file_name': img_name,
           'category': category,
           'img_array': img,
+          'img_features': img_features,
           'type': 'train',
           'bag_of_words': None
         }, ignore_index=True)
@@ -94,9 +82,11 @@ def get_results_dataframe(all_categories, n_categories):
           'file_name': img_name,
           'category': category,
           'img_array': img,
+          'img_features': img_features,
           'type': 'test',
           'bag_of_words': None
         }, ignore_index=True)
+    print("category loaded nr. ", category_i, "of ", len(all_categories))
   
   return df
 
@@ -114,12 +104,14 @@ def create_distance_matrix(codebook, features):
 # Function that creates K lenght sparse vector that represents the a given images "bag of words"
 def create_bag_of_words(distance_matrix):
   sparse_vector = np.zeros(k)
-  for i in range(len(sparse_vector)):
-    minimum =  min (distance_matrix[i])
-    for j in range(len(distance_matrix[i])):
-      if distance_matrix[i][j] == minimum:
-          sparse_vector[j] += 1
+  for i, descriptor in enumerate(distance_matrix):
+    minimum = min(descriptor)
+    for j, word in enumerate(descriptor):
+      if word == minimum:
+        sparse_vector[j] +=1
+  #print("create bag of words: BoW done", )
   return sparse_vector
+      
 
 def calculate_distance_matrix (img_features, codebook):
   distance_matrix = np.zeros((len(img_features), len(codebook)))
@@ -128,16 +120,31 @@ def calculate_distance_matrix (img_features, codebook):
       distance_matrix[i,j] = distance.euclidean(img_features[i], codebook[j])
   return distance_matrix
 
+def calculate_sift_features_for_codebook(df):
+  sift = cv2.xfeatures2d.SIFT_create()
+  sift_features = []
+  for i, row in df.loc[df['type'] == 'train'].iterrows():
+    img = df.at[i, 'img_array']
+    (keypoints, descriptors) = sift.detectAndCompute(img, None)
+    if descriptors is not None:
+      for descriptor in descriptors:
+        if descriptor is not None:
+          sift_features.append(descriptor)
+    else: 
+      print("empty descriptor found in row: ", i)
+  sift_features = np.array(sift_features)
+  print("features added for nr. of img: ", i, "of: ", len(df))
+  return sift_features
+
+
 # Function to calculate each cell of the "bag of words" column
 def create_bags_of_words(df, codebook):
-  #df = df[df['type'] == 'train']
-  print(df.head())
-  #print(df.head())
+  sift = cv2.xfeatures2d.SIFT_create()
   for index, row in df.iterrows():
-    #print("image array: ", df["img_array"].iloc[index])
-    img_descriptors = get_sift_descriptors_for_img(df["img_array"].iloc[index])
+    img = df["img_array"].iloc[index]
+    (keypoints, descriptors) = sift.detectAndCompute(img, None)
+    img_descriptors = descriptors
     distance_matrix = calculate_distance_matrix(img_descriptors, codebook)
-    print("created distance matrix for row: ", index)
     df["bag_of_words"].iloc[index] = create_bag_of_words(distance_matrix)
-    print("created bag of words, test sum: ", sum(df["bag_of_words"].iloc[index]))
+    print("Full iterations done: ", index)
   return df
