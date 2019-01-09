@@ -39,7 +39,6 @@ def get_descriptor_matrix(N_IMAGES, img_category):
 
 def get_descriptor_matrices(all_categories, n_images, n_categories):
   descriptor_matrix = []
-
   for category in all_categories[0:n_categories]:
     descriptor_matrix = get_descriptor_matrix(
         N_IMAGES=n_images, img_category=category)
@@ -48,8 +47,17 @@ def get_descriptor_matrices(all_categories, n_images, n_categories):
 
   return descriptor_matrix
 
+# def calculate_sift_features_for_codebook(df):
+#   sift = cv2.xfeatures2d.SIFT_create()
+#   sift_features = []
+#   df_only_train = df[df["type"] == "train"]
+#   for i, row in df.iterrows():
+#     img = df_only_train[df_only_train["img_array"]].iloc[i]
+#     (keypoints, descriptors) = sift.detectAndCompute(img, None)
+#     sift_features.append(descriptors)
+#   return sift_features
+
 def measure_eucledian_distance(vector1, vector2):
-  print("measure_eucledian_distance")
   sum = 0
   for i in range(128):
     sum += (vector1[i] - vector2[i])**2
@@ -65,7 +73,7 @@ def get_results_dataframe(all_categories, n_categories):
   df = pd.DataFrame(columns=['file_name', 'category', 'img_array', 'type', 'bag_of_words'])
 
   for category_i, category in enumerate(all_categories[0:n_categories]):
-    print("DataFrame creation: category " + str(category_i + 1) + "/" + str(n_categories))
+    #print("DataFrame creation: category " + str(category_i + 1) + "/" + str(n_categories))
     img_names = [img for img in listdir("./object_categories/" + category)]
     if ".DS_Store" in img_names: img_names.remove(".DS_Store")
   
@@ -112,17 +120,24 @@ def create_bag_of_words(distance_matrix):
       if distance_matrix[i][j] == minimum:
           sparse_vector[j] += 1
   return sparse_vector
-    
+
+def calculate_distance_matrix (img_features, codebook):
+  distance_matrix = np.zeros((len(img_features), len(codebook)))
+  for i, row in enumerate(distance_matrix):
+    for j, col in enumerate(row):
+      distance_matrix[i,j] = distance.euclidean(img_features[i], codebook[j])
+  return distance_matrix
+
 # Function to calculate each cell of the "bag of words" column
 def create_bags_of_words(df, codebook):
-  print("create_bags_of_words")
-  df[df['type'] == 'train']
+  #df = df[df['type'] == 'train']
+  print(df.head())
   #print(df.head())
   for index, row in df.iterrows():
-    print("image array: ", df["img_array"].iloc[index])
+    #print("image array: ", df["img_array"].iloc[index])
     img_descriptors = get_sift_descriptors_for_img(df["img_array"].iloc[index])
-    distance_matrix = create_distance_matrix(codebook, img_descriptors)
-    print("nr. of distance matrices calculated: ", index)
+    distance_matrix = calculate_distance_matrix(img_descriptors, codebook)
+    print("created distance matrix for row: ", index)
     df["bag_of_words"].iloc[index] = create_bag_of_words(distance_matrix)
-    print(df["bag_of_words"].iloc[index])
-  print(df.head())
+    print("created bag of words, test sum: ", sum(df["bag_of_words"].iloc[index]))
+  return df
