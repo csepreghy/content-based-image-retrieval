@@ -6,7 +6,7 @@ all_categories = get_all_categories()
 
 df = get_results_dataframe(all_categories, n_categories=len(all_categories))
 print(df.head(30))
-#print(df.tail())
+print(df.tail())
 
 sift_for_codebook = calculate_sift_features_for_codebook(df)
 print("sift for codebook: ",sift_for_codebook.shape)
@@ -21,7 +21,7 @@ print("K-means model done")
 codebook = kmeans_model.cluster_centers_
 
 # saves the k-means model
-with open("./pickles/codebook", "wb") as handle:
+with open("./pickles/codebook.pickle", "wb") as handle:
     pickle.dump(codebook, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 # This calculates the bag of words for each row in the data frame

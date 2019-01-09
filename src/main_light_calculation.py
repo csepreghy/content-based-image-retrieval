@@ -4,9 +4,13 @@ from import_modules import *
 with open('pickles/dataframe.pickle', 'rb') as handle:
     df = pickle.load(handle)
    # print(len(descriptor_matrix_10_10))
+print("Data frame: ", df.head(), df.tail())
 
 # Read K-means model from .pickle file
 kmeans_model = pickle.load(open('pickles/codebook.pickle', 'rb'))  # loads the k-means model
 codebook = kmeans_model.cluster_centers_
+
+print("codebook dimentions: ", codebook.shape)
+
 
 
