@@ -1,4 +1,4 @@
-.DS_Store
+**/.DS_Store
 object_categories/.DS_Store
 src/__pycache__/
 descriptor_matrix_all_categories.pickle
