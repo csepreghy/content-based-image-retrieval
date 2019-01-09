@@ -16,7 +16,7 @@ kmeans_model = MiniBatchKMeans(n_clusters=k).fit(sift_for_codebook)
 print("K-means model done")
 codebook = kmeans_model.cluster_centers_
 
-saves the k-means model
+# saves the k-means model
 with open("./pickles/codebook", "wb") as handle:
     pickle.dump(codebook, handle, protocol=pickle.HIGHEST_PROTOCOL)
 print("Fin")
