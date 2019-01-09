@@ -1,13 +1,14 @@
 from import_modules import *
 
 # Creates the data frame and fills all columns except for "bag_of_words"
-def get_results_dataframe(all_categories, n_categories):
+def get_results_dataframe(all_categories, n_categories, max_n_images):
   df = pd.DataFrame(columns=['file_name', 'category', 'img_array', 'type', 'bag_of_words'])
   #sift = cv2.xfeatures2d.SIFT_create()
   #print(all_categories)
 
   for category_i, category in enumerate(all_categories[0:n_categories]):
     img_names = [img for img in listdir("./object_categories/" + category)]
+    img_names = img_names[:max_n_images + 1]
     #if ".DS_Store" in img_names: img_names.remove(".DS_Store")
   
     for i, img_name in enumerate(img_names[1:len(img_names)]):
