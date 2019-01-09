@@ -63,14 +63,14 @@ def get_sift_descriptors_for_img(img):
 def get_results_dataframe(all_categories, n_categories):
   df = pd.DataFrame(columns=['file_name', 'category', 'img_array', 'type', 'bag_of_words'])
 
-  for category in all_categories[0:n_categories]:
+  for category_i, category in enumerate(all_categories[0:n_categories]):
+    print("DataFrame creation: category " + str(category_i) + "/" + str(n_categories))
     img_names = [img for img in listdir("./object_categories/" + category)]
   
     for i, img_name in enumerate(img_names):
       img = cv2.imread("object_categories/" + category + "/" + img_name, cv2.IMREAD_GRAYSCALE)
       
       if i < len(img_names)/2:
-        print("first if")
         df = df.append({
           'file_name': img_name,
           'category': category,
@@ -80,7 +80,6 @@ def get_results_dataframe(all_categories, n_categories):
         }, ignore_index=True)
 
       elif i >= len(img_names)/2:
-        print("second if")
         df = df.append({
           'file_name': img_name,
           'category': category,
