@@ -3,7 +3,7 @@ import cv2
 import matplotlib.pyplot as plt
 from matplotlib import style
 from os import listdir
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, MiniBatchKMeans
 import numpy as np
 import pickle
 import pandas as pd
