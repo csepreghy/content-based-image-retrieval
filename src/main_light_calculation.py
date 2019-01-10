@@ -1,7 +1,7 @@
 from import_modules import *
 
 # Read Data frame from .pickle file 
-with open('pickles/df_20_categories_all_images_k500.pickle', 'rb') as handle:
+with open('pickles/df_2_categories_all_images_k200.pickle', 'rb') as handle:
   df = pickle.load(handle)
 #print("Data frame: ", df.head(), df.tail())
 
@@ -10,7 +10,9 @@ with open('pickles/df_20_categories_all_images_k500.pickle', 'rb') as handle:
 
 
 # Read K-means model from .pickle file
-codebook = pickle.load(open('pickles/codebook_5_categories_10_images.pickle', 'rb'))  # loads the k-means model
+# loads the k-means model
+codebook = pickle.load(
+    open('pickles/df_10_categories_images_k400.pickle', 'rb'))
 print('codebook dimentions: ', codebook.shape)
 # df_small_BoW = create_bags_of_words(df_small, codebook)
 
@@ -27,9 +29,10 @@ svm_model = create_svm_model(df)
 
 # print("codebook dimentions: ", codebook.shape)
 
-df_small_BoW = pickle.load(open('./pickles/df_small_BoW.pickle', 'rb'))
-print(df_small_BoW)
-img_nr = 19
-test_img = df_small_BoW['bag_of_words'].iloc[img_nr]
-test = calculate_hist_dist(test_img, df_small_BoW)
-print("closest: ", min(test),  "top 3: ", test, "real category: ", df_small_BoW['category'].iloc[img_nr])
+# df_small_BoW = pickle.load(
+#     open('./pickles/df_20_categories_all_images_k500.pickle.pickle', 'rb'))
+# print(df_small_BoW)
+# img_nr = 19
+# test_img = df_small_BoW['bag_of_words'].iloc[img_nr]
+# test = calculate_hist_dist(test_img, df_small_BoW)
+# print("closest: ", min(test),  "top 3: ", test, "real category: ", df_small_BoW['category'].iloc[img_nr])

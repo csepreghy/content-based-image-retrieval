@@ -63,6 +63,9 @@ def get_y_test_BoWs(dataframe):
 # y_test = get_y_test_BoWs(df_bow)
 # print("y_test made with shape", y_test.shape)
 
+# Creates SVM classifier with a model that can predict category from BoW
+# The accuracy of the model is printed at the end. You can feed it with any dataframe
+# that has different number of categories and images.
 def create_svm_model(dataframe):
   clf = svm.SVC(gamma=0.001)
 
