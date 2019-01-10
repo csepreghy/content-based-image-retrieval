@@ -31,8 +31,8 @@ print("K-means model done")
 codebook = kmeans_model.cluster_centers_
 
 # saves the k-means model
-# with open("./pickles/codebook.pickle", "wb") as handle:
-#     pickle.dump(codebook, handle, protocol=pickle.HIGHEST_PROTOCOL)
+with open("./pickles/codebook_all_categories_all_images.pickle", "wb") as handle:
+    pickle.dump(codebook, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 # This calculates the bag of words for each row in the data frame
 df_all_categories_all_images = create_bags_of_words(df_all_categories_all_images, codebook)
