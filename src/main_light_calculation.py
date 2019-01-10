@@ -1,7 +1,7 @@
 from import_modules import *
 
 # Read Data frame from .pickle file 
-with open('pickles/df_5_categories_10_images_k800.pickle', 'rb') as handle:
+with open('pickles/df_20_categories_all_images_k500.pickle', 'rb') as handle:
     df = pickle.load(handle)
    # print(len(descriptor_matrix_10_10))
 print("Data frame: ", df.head(), df.tail())

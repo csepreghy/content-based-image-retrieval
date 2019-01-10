@@ -15,7 +15,7 @@ def get_results_dataframe(all_categories, n_categories, max_n_images):
       if img_name != ".DS_Store":
         img = cv2.imread("object_categories/" + category + "/" + img_name, cv2.IMREAD_GRAYSCALE)
 
-      if i <= len(img_names)/2:
+      if i <= (len(img_names)/2) - 1:
         df = df.append({
           'file_name': img_name,
           'category': category,
@@ -24,7 +24,7 @@ def get_results_dataframe(all_categories, n_categories, max_n_images):
           'bag_of_words': None
         }, ignore_index=True)
 
-      elif i > len(img_names)/2:
+      elif i > (len(img_names)/2) - 1:
         df = df.append({
           'file_name': img_name,
           'category': category,
