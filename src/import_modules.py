@@ -1,3 +1,5 @@
+# In this file we import packages and do a little routing between our files
+
 # Python modules
 import cv2
 import matplotlib.pyplot as plt
@@ -13,7 +15,5 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 
 # Our own files
-from constants import N_IMAGES, k
 from image_processing_functions import *
-from helper_functions import get_all_categories
-from ml_functions import *
+#from ml_functions import *
